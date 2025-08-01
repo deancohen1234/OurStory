@@ -93,21 +93,16 @@ public class PlayerController : MonoBehaviour
         //Jumping
         if (Input.GetButtonDown("Jump"))
         {
-            if (m_IsGrounded || m_hasDoubleJump)
+            if (m_IsGrounded)
             {
                 Jump();
             }
         }
 
-        if (m_IsOnWall)
-        {
-            m_hasDoubleJump = true;
-        }
-
         //Wall sliding
         if (m_IsOnWall && m_CanMove)
         {
-            m_Rigidbody.linearVelocity = new Vector2(m_Rigidbody.linearVelocity.x, -m_WallSlideSpeed);
+            //m_Rigidbody.linearVelocity = new Vector2(m_Rigidbody.linearVelocity.x, -m_WallSlideSpeed);
         }
 
         //Wall jumping
@@ -124,25 +119,6 @@ public class PlayerController : MonoBehaviour
         }
 
 
-    }
-
-    private void CheckDeathState(bool freezePosition)
-    {
-        if (freezePosition)
-        {
-            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-            gameObject.GetComponent<SpriteRenderer>().enabled = false; //TODO make this not use GetComponent every frame
-        }
-        else
-        {
-            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-            gameObject.GetComponent<SpriteRenderer>().enabled = true; //TODO make this not use GetComponent every frame
-        }
-    }
-
-    private void ManageVibration()
-    {
-       
     }
 
     public bool IsStickOnOuterRim(Vector2 stickPosition)
@@ -164,14 +140,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move(Vector2 moveDirection)
     {
-        //caluclate player velocity after a wall jump
-        if (m_IsWallJumping || m_IsExpelled)
-        {
-            //doesn't need to know if on right wall or left wall because momentum was multiplied by it earilier
-            m_Rigidbody.linearVelocity = Vector2.Lerp(m_Rigidbody.linearVelocity, new Vector2(moveDirection.x * m_MoveSpeed, m_Rigidbody.linearVelocity.y), Time.deltaTime * m_WallJumpLerpTime);
-        }
-
-        else
+        if (!m_IsOnWall)
         {
             m_Rigidbody.linearVelocity = new Vector2(moveDirection.x * m_MoveSpeed, m_Rigidbody.linearVelocity.y);
         }

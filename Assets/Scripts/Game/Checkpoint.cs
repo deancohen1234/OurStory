@@ -7,6 +7,7 @@ public class Checkpoint : MonoBehaviour
     public void ReturnToCheckpoint(Transform Player)
     {
         Player.SetPositionAndRotation(SpawnLocation.position, SpawnLocation.rotation);
+        Player.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
     }
 
     private void OnTriggerEnter2D (Collider2D other)
