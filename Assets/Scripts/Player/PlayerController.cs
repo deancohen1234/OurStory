@@ -7,12 +7,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Move Properties")]
     public float m_MoveSpeed = 5.0f;
+    public float m_MaxAcceleration = 5.0f;
     public float m_JumpAmount = 10.0f;
     public float m_FallMultiplier = 2.5f;
     public float m_LowJumpMultiplier = 2.0f;
     public float m_SlowFallGravity = -1.0f;
     public float m_HorizontalGlideSpeed = 0.2f;
     public float m_VerticalGlideSpeed = 0.1f;
+    public float m_GroundedFrictionDrag = 0.9f;
 
     [Header("Wall Jump Properties")]
     public float m_WallSlideSpeed = 0.5f;
@@ -39,23 +41,16 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D m_Rigidbody;
 
-    private float m_WallJumpMomentum;
+    private float DesiredX;
+    private float DesiredY;
+    private bool bDesiresJump;
 
-    private bool m_hasDoubleJump;
     private bool m_IsGrounded;
     private bool m_IsOnWall;
     private bool m_IsWallJumping;
     private bool m_CanMove = true;
-    private bool m_IsExpelled;
-    private bool m_IsLeaf;
 
     private bool m_OnRightWall;
-
-    private Vector2 m_StoredGustDirection; //needed to measure delta
-    private bool m_HasChargedGust = false;
-    private bool m_TriggerPressed = false;
-
-    //vibration public variables
     private bool playerIndexSet = false;
 
     //wind power global variables
@@ -72,14 +67,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         //get  input
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-        Vector2 direction = new Vector2(x, y);
+        DesiredX = Input.GetAxis("Horizontal");
+        DesiredY = Input.GetAxis("Vertical");
 
+        bDesiresJump |= Input.GetButtonDown("Jump");
+    }
 
-        if (m_IsLeaf) { return; }
+    private void FixedUpdate()
+    {
+        Vector2 direction = new Vector2(DesiredX, DesiredY);
 
         CalculateCollisions();
         CalculateFallingSpeed();
@@ -90,35 +87,24 @@ public class PlayerController : MonoBehaviour
             Move(direction);
         }
 
-        //Jumping
-        if (Input.GetButtonDown("Jump"))
+        //add more friction if you are grounded and not moving
+        if (m_IsGrounded && !bDesiresJump)
         {
+            if (Mathf.Abs(DesiredX) <= 0.2f)
+            {
+                m_Rigidbody.linearVelocity *= m_GroundedFrictionDrag;
+            }
+        }
+
+        //Jumping
+        if (bDesiresJump)
+        {
+            bDesiresJump = false;
             if (m_IsGrounded)
             {
                 Jump();
             }
         }
-
-        //Wall sliding
-        if (m_IsOnWall && m_CanMove)
-        {
-            //m_Rigidbody.linearVelocity = new Vector2(m_Rigidbody.linearVelocity.x, -m_WallSlideSpeed);
-        }
-
-        //Wall jumping
-        if (m_IsOnWall && Input.GetButtonDown("Fire1"))
-        {
-            WallJump();
-        }
-
-        if (m_IsGrounded)
-        {
-            m_IsWallJumping = false;
-            m_hasDoubleJump = true;
-            m_IsExpelled = false;
-        }
-
-
     }
 
     public bool IsStickOnOuterRim(Vector2 stickPosition)
@@ -142,7 +128,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!m_IsOnWall)
         {
-            m_Rigidbody.linearVelocity = new Vector2(moveDirection.x * m_MoveSpeed, m_Rigidbody.linearVelocity.y);
+            float linearX = Mathf.MoveTowards(m_Rigidbody.linearVelocity.x, moveDirection.x * m_MoveSpeed, m_MaxAcceleration * Time.fixedDeltaTime);
+            m_Rigidbody.linearVelocity = new Vector2(linearX, m_Rigidbody.linearVelocity.y);
         }
     }
 
@@ -190,13 +177,6 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         m_Rigidbody.linearVelocity += new Vector2(m_Rigidbody.linearVelocity.x, m_JumpAmount);
-
-        //player is already in air when jumping
-        if (m_IsGrounded == false)
-        {
-            //use double jump
-            m_hasDoubleJump = false;
-        }
     }
 
     private void WallJump()
@@ -233,12 +213,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere((Vector2)transform.position + m_BottomColliderOffset, m_SphereRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + m_RightColliderOffset, m_SphereRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + m_LeftColliderOffset, m_SphereRadius);
-    }
-
-    //used when player is expelled from vein, functions similarly to isWallJumping
-    public void SetIsExpelled(bool b)
-    {
-        m_IsExpelled = b;
     }
 
     private void OnPlayerDeath()

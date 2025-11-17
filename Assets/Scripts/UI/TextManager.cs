@@ -10,6 +10,8 @@ public class TextManager : MonoBehaviour
     public TextMeshProUGUI TextAsset;
     public TextEffect NarrationEffect;
 
+    public delegate void OnDisplayMessageFinished();
+
     public float DisplayTime = 10; // in seconds
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -39,6 +41,16 @@ public class TextManager : MonoBehaviour
         StartCoroutine(WaitForDisplayTime(DisplayTime));
     }
 
+    public void DisplayMessage(string Message, OnDisplayMessageFinished Callback)
+    {
+        TextAsset.text = Message;
+
+        NarrationEffect.StartManualEffect("text-entry");
+
+        StartCoroutine(WaitForDisplayTime(DisplayTime, Callback));
+    }
+
+
     //after the text animation finishes, show text
     public void PostAnimationShowText(TextMeshProUGUI Text)
     {
@@ -55,5 +67,17 @@ public class TextManager : MonoBehaviour
         yield return new WaitForSeconds(WaitTime);
 
         NarrationEffect.StartManualEffect("text-exit");
+    }
+
+    private IEnumerator WaitForDisplayTime(float WaitTime, OnDisplayMessageFinished Callback)
+    {
+        yield return new WaitForSeconds(WaitTime);
+
+        NarrationEffect.StartManualEffect("text-exit");
+        
+        if (Callback != null)
+        {
+            Callback.Invoke();
+        }
     }
 }

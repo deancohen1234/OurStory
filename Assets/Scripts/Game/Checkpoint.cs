@@ -12,8 +12,7 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter2D (Collider2D other)
     {
-        Debug.Log("Triggering Checkpoint");
-
+        Debug.Log("Triggering Checkpoint " + gameObject.name);
 
         if (other)
         {
