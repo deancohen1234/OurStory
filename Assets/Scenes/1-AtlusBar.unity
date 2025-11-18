@@ -4400,7 +4400,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -4584,7 +4584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveSpeed: 7.5
   m_MaxAcceleration: 25
-  m_JumpAmount: 8
+  m_JumpAmount: 10
   m_FallMultiplier: 4
   m_LowJumpMultiplier: 5
   m_SlowFallGravity: -1
