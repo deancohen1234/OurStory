@@ -39,7 +39,15 @@ public class PlayerController : MonoBehaviour
     public Vector2 m_LeftColliderOffset;
     public float m_SphereRadius = 0.1f;
 
+    [Header("Connections")]
+    public Transform ConnectionOverride;
+
     private Rigidbody2D m_Rigidbody;
+    private Transform m_ConnectedBody;
+
+    private Vector2 m_ConnectedBodyWorldPosition;
+    private Vector2 m_ConnectedBodyLocalPosition;
+    private Vector2 m_ConnectionVelocity;
 
     private float DesiredX;
     private float DesiredY;
@@ -49,19 +57,22 @@ public class PlayerController : MonoBehaviour
     private bool m_IsOnWall;
     private bool m_IsWallJumping;
     private bool m_CanMove = true;
+    private Vector2 m_GroundNormal = Vector2.up;
 
     private bool m_OnRightWall;
-    private bool playerIndexSet = false;
 
-    //wind power global variables
-    private float m_ChargeStartTime;
 
     // Start is called before the first frame update
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
 
-        Debug.Log("<color=red>Error: </color>AssetBundle not found");
+        if (ConnectionOverride != null)
+        {
+            m_ConnectedBody = ConnectionOverride;
+            m_ConnectedBodyWorldPosition = transform.position;
+            m_ConnectedBodyLocalPosition = m_ConnectedBody.InverseTransformPoint(m_ConnectedBodyWorldPosition);
+        }
     }
 
     // Update is called once per frame
@@ -79,7 +90,11 @@ public class PlayerController : MonoBehaviour
         Vector2 direction = new Vector2(DesiredX, DesiredY);
 
         CalculateCollisions();
+
+        ApplyConnectionForces();
+
         CalculateFallingSpeed();
+        ApplyGravity();
 
 
         if (m_CanMove)
@@ -88,13 +103,13 @@ public class PlayerController : MonoBehaviour
         }
 
         //add more friction if you are grounded and not moving
-        if (m_IsGrounded && !bDesiresJump)
-        {
-            if (Mathf.Abs(DesiredX) <= 0.2f)
-            {
-                m_Rigidbody.linearVelocity *= m_GroundedFrictionDrag;
-            }
-        }
+        //if (m_IsGrounded && !bDesiresJump)
+        //{
+        //    if (Mathf.Abs(DesiredX) <= 0.2f)
+        //    {
+        //        m_Rigidbody.linearVelocity *= m_GroundedFrictionDrag;
+        //    }
+        //}
 
         //Jumping
         if (bDesiresJump)
@@ -105,6 +120,8 @@ public class PlayerController : MonoBehaviour
                 Jump();
             }
         }
+
+        UpdatePlayerRotation();
     }
 
     public bool IsStickOnOuterRim(Vector2 stickPosition)
@@ -124,13 +141,73 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void ApplyGravity()
+    {
+        m_Rigidbody.linearVelocity += m_GroundNormal * Physics2D.gravity.y * Time.fixedDeltaTime;
+
+        Debug.DrawLine(transform.position, ((Vector2)transform.position + m_GroundNormal * Physics2D.gravity.y * Time.fixedDeltaTime), Color.magenta);
+
+
+    }
+
     private void Move(Vector2 moveDirection)
     {
         if (!m_IsOnWall)
         {
-            float linearX = Mathf.MoveTowards(m_Rigidbody.linearVelocity.x, moveDirection.x * m_MoveSpeed, m_MaxAcceleration * Time.fixedDeltaTime);
-            m_Rigidbody.linearVelocity = new Vector2(linearX, m_Rigidbody.linearVelocity.y);
+            Vector2 normalPerpendicular = Vector2.Perpendicular(m_GroundNormal);
+            Vector2 projectedMoveDirection = normalPerpendicular * Vector2.Dot(normalPerpendicular, moveDirection);
+            projectedMoveDirection = projectedMoveDirection.normalized;
+
+            //float desiredLinearX = Mathf.MoveTowards(m_Rigidbody.linearVelocity.x, projectedMoveDirection.x * m_MoveSpeed * Time.fixedDeltaTime, m_MaxAcceleration * Time.fixedDeltaTime);
+            float desiredLinearX = projectedMoveDirection.x * m_MoveSpeed * Time.fixedDeltaTime;
+            //float desiredLinearY = Mathf.MoveTowards(m_Rigidbody.linearVelocity.y, projectedMoveDirection.y * m_MoveSpeed * Time.fixedDeltaTime, m_MaxAcceleration * Time.fixedDeltaTime);
+            float desiredLinearY = projectedMoveDirection.y * m_MoveSpeed * Time.fixedDeltaTime;
+
+            Vector2 desiredLinear = new Vector2(desiredLinearX, desiredLinearY);
+            desiredLinear = Vector2.ClampMagnitude(desiredLinear, m_MoveSpeed);
+
+            Debug.DrawLine(transform.position, ((Vector2)transform.position + desiredLinear), Color.white);
+
+            m_Rigidbody.linearVelocity += new Vector2(desiredLinear.x, m_IsGrounded ? desiredLinear.y : 0);
+
+            Debug.DrawLine(transform.position, (Vector2)transform.position + new Vector2(desiredLinear.x, desiredLinear.y), Color.white);
         }
+    }
+
+    private void ApplyConnectionForces()
+    {
+        if (m_ConnectedBody != null && m_IsGrounded)
+        {
+            Vector2 connectionMovement = (Vector2)m_ConnectedBody.transform.TransformPoint(m_ConnectedBodyLocalPosition) - m_ConnectedBodyWorldPosition;
+            m_ConnectionVelocity = connectionMovement / Time.deltaTime;
+
+            Vector2 newWorldPos =
+            m_ConnectedBody.TransformPoint(m_ConnectedBodyLocalPosition);
+
+            Vector2 platformDelta = newWorldPos - m_ConnectedBodyWorldPosition;
+
+            //Vector2 relativeVelocity = m_ConnectionVelocity - m_Rigidbody.linearVelocity;
+
+            m_Rigidbody.position += platformDelta;
+
+            m_ConnectedBodyWorldPosition = newWorldPos;
+            m_ConnectedBodyLocalPosition = m_ConnectedBody.InverseTransformPoint(m_ConnectedBodyWorldPosition);
+        }
+        else
+        {
+            //if there is no connected body, then we have functionally 0 relative velocity
+            m_ConnectionVelocity = m_Rigidbody.linearVelocity;
+        }
+
+        
+    }
+
+    private void UpdatePlayerRotation()
+    {
+        float zRotation = Vector2.SignedAngle(Vector2.up, m_GroundNormal);
+        //PlayerParent.rotation = Quaternion.Euler(0, 0, zRotation);
+
+        m_Rigidbody.rotation = zRotation;
     }
 
     private void CalculateCollisions()
@@ -156,6 +233,14 @@ public class PlayerController : MonoBehaviour
         {
             m_IsOnWall = false;
         }
+
+
+        RaycastHit2D Hit = Physics2D.Raycast(transform.position, Vector2.down, 2, m_GroundLayerMask);
+
+        if (Hit.normal != Vector2.zero)
+        {
+            m_GroundNormal = Hit.normal;
+        }
     }
 
     private void CalculateFallingSpeed()
@@ -164,32 +249,19 @@ public class PlayerController : MonoBehaviour
         if (m_Rigidbody.linearVelocity.y < 0)
         {
             //- 1 to account for physics already applying 1 force of gravity
-            m_Rigidbody.linearVelocity += Vector2.up * Physics2D.gravity.y * (m_FallMultiplier - 1) * Time.deltaTime;
+            m_Rigidbody.linearVelocity += m_GroundNormal * Physics2D.gravity.y * (m_FallMultiplier - 1) * Time.deltaTime;
         }
         //if we are rising
         //needs to be done because once player lets go of jump button harder gravity needs to be applied
         else if (m_Rigidbody.linearVelocity.y > 0 && !Input.GetButton("Jump"))
         {
-            m_Rigidbody.linearVelocity += Vector2.up * Physics2D.gravity.y * (m_LowJumpMultiplier - 1) * Time.deltaTime;
+            m_Rigidbody.linearVelocity += m_GroundNormal * Physics2D.gravity.y * (m_LowJumpMultiplier - 1) * Time.deltaTime;
         }
     }
 
     private void Jump()
     {
         m_Rigidbody.linearVelocity += new Vector2(m_Rigidbody.linearVelocity.x, m_JumpAmount);
-    }
-
-    private void WallJump()
-    {
-        //if on right wall then make velocity negative so you go left
-        int onRightWall = (m_OnRightWall) ? -1 : 1;
-        m_Rigidbody.linearVelocity = new Vector2(m_Rigidbody.linearVelocity.x + (m_WallJumpHorizonatlStrength * onRightWall), m_Rigidbody.linearVelocity.y + m_WallJumpVerticalStrength);
-
-        StopCoroutine(DisableMovement(0.1f));
-        StartCoroutine(DisableMovement(0.1f));
-
-        m_IsWallJumping = true;
-        m_IsOnWall = false;
     }
 
     private IEnumerator DisableMovement(float time)
