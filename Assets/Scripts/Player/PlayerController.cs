@@ -192,11 +192,10 @@ public class PlayerController : MonoBehaviour
             // Just landed this frame — initialize but DO NOT move
             if (!m_WasGrounded)
             {
-                m_ConnectedBodyWorldPosition =
-                    m_ConnectedBody.TransformPoint(m_ConnectedBodyLocalPosition);
-
                 m_ConnectedBodyLocalPosition =
-                    m_ConnectedBody.InverseTransformPoint(transform.position);
+                   m_ConnectedBody.InverseTransformPoint(m_Rigidbody.position);
+
+                m_ConnectedBodyWorldPosition = m_Rigidbody.position;
 
                 return;
             }
@@ -204,8 +203,7 @@ public class PlayerController : MonoBehaviour
             Vector2 connectionMovement = (Vector2)m_ConnectedBody.transform.TransformPoint(m_ConnectedBodyLocalPosition) - m_ConnectedBodyWorldPosition;
             m_ConnectionVelocity = connectionMovement / Time.deltaTime;
 
-            Vector2 newWorldPos =
-            m_ConnectedBody.TransformPoint(m_ConnectedBodyLocalPosition);
+            Vector2 newWorldPos = m_ConnectedBody.TransformPoint(m_ConnectedBodyLocalPosition);
 
             Vector2 platformDelta = newWorldPos - m_ConnectedBodyWorldPosition;
 
