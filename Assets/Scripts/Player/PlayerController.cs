@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
     private bool bDesiresJump;
 
     private bool m_IsGrounded;
+    private bool m_WasGrounded;
+
     private bool m_IsOnWall;
     private bool m_IsWallJumping;
     private bool m_CanMove = true;
@@ -94,6 +96,7 @@ public class PlayerController : MonoBehaviour
         ApplyConnectionForces();
 
         CalculateFallingSpeed();
+
         ApplyGravity();
 
 
@@ -101,6 +104,7 @@ public class PlayerController : MonoBehaviour
         {
             Move(direction);
         }
+
 
         //add more friction if you are grounded and not moving
         //if (m_IsGrounded && !bDesiresJump)
@@ -122,6 +126,11 @@ public class PlayerController : MonoBehaviour
         }
 
         UpdatePlayerRotation();
+
+        m_WasGrounded = m_IsGrounded;
+
+        //Debug.DrawLine(transform.position, (Vector2)transform.position + m_Rigidbody.linearVelocity * 5f, Color.white);
+
     }
 
     public bool IsStickOnOuterRim(Vector2 stickPosition)
@@ -166,11 +175,13 @@ public class PlayerController : MonoBehaviour
             Vector2 desiredLinear = new Vector2(desiredLinearX, desiredLinearY);
             desiredLinear = Vector2.ClampMagnitude(desiredLinear, m_MoveSpeed);
 
-            Debug.DrawLine(transform.position, ((Vector2)transform.position + desiredLinear), Color.white);
+            float newX = Mathf.MoveTowards(m_Rigidbody.linearVelocity.x, desiredLinear.x, m_MaxAcceleration * Time.fixedDeltaTime);
+            float newY = Mathf.MoveTowards(m_Rigidbody.linearVelocity.y, desiredLinear.y, m_MaxAcceleration * Time.fixedDeltaTime);
 
-            m_Rigidbody.linearVelocity += new Vector2(desiredLinear.x, m_IsGrounded ? desiredLinear.y : 0);
+            m_Rigidbody.linearVelocity += new Vector2((Mathf.Abs(projectedMoveDirection.x) * (newX - m_Rigidbody.linearVelocity.x)), (Mathf.Abs(projectedMoveDirection.y) * (newY - m_Rigidbody.linearVelocity.y)));
 
-            Debug.DrawLine(transform.position, (Vector2)transform.position + new Vector2(desiredLinear.x, desiredLinear.y), Color.white);
+            Debug.DrawLine(transform.position, (Vector2)transform.position + new Vector2(m_Rigidbody.linearVelocity.x, m_Rigidbody.linearVelocity.y), Color.white);
+            Debug.Log(desiredLinear);
         }
     }
 
@@ -178,6 +189,18 @@ public class PlayerController : MonoBehaviour
     {
         if (m_ConnectedBody != null && m_IsGrounded)
         {
+            // Just landed this frame — initialize but DO NOT move
+            if (!m_WasGrounded)
+            {
+                m_ConnectedBodyWorldPosition =
+                    m_ConnectedBody.TransformPoint(m_ConnectedBodyLocalPosition);
+
+                m_ConnectedBodyLocalPosition =
+                    m_ConnectedBody.InverseTransformPoint(transform.position);
+
+                return;
+            }
+
             Vector2 connectionMovement = (Vector2)m_ConnectedBody.transform.TransformPoint(m_ConnectedBodyLocalPosition) - m_ConnectedBodyWorldPosition;
             m_ConnectionVelocity = connectionMovement / Time.deltaTime;
 
@@ -186,11 +209,14 @@ public class PlayerController : MonoBehaviour
 
             Vector2 platformDelta = newWorldPos - m_ConnectedBodyWorldPosition;
 
+            Debug.DrawLine(transform.position, (Vector2)transform.position + platformDelta, Color.red);
+
             //Vector2 relativeVelocity = m_ConnectionVelocity - m_Rigidbody.linearVelocity;
 
             m_Rigidbody.position += platformDelta;
 
             m_ConnectedBodyWorldPosition = newWorldPos;
+
             m_ConnectedBodyLocalPosition = m_ConnectedBody.InverseTransformPoint(m_ConnectedBodyWorldPosition);
         }
         else
@@ -207,7 +233,7 @@ public class PlayerController : MonoBehaviour
         float zRotation = Vector2.SignedAngle(Vector2.up, m_GroundNormal);
         //PlayerParent.rotation = Quaternion.Euler(0, 0, zRotation);
 
-        m_Rigidbody.rotation = zRotation;
+        m_Rigidbody.MoveRotation(zRotation);
     }
 
     private void CalculateCollisions()
@@ -246,14 +272,14 @@ public class PlayerController : MonoBehaviour
     private void CalculateFallingSpeed()
     {
         //if falling
-        if (m_Rigidbody.linearVelocity.y < 0)
+        if (m_Rigidbody.linearVelocity.y < 0 && !m_IsGrounded)
         {
             //- 1 to account for physics already applying 1 force of gravity
             m_Rigidbody.linearVelocity += m_GroundNormal * Physics2D.gravity.y * (m_FallMultiplier - 1) * Time.deltaTime;
         }
         //if we are rising
         //needs to be done because once player lets go of jump button harder gravity needs to be applied
-        else if (m_Rigidbody.linearVelocity.y > 0 && !Input.GetButton("Jump"))
+        else if (m_Rigidbody.linearVelocity.y > 0 && !Input.GetButton("Jump") && !m_IsGrounded)
         {
             m_Rigidbody.linearVelocity += m_GroundNormal * Physics2D.gravity.y * (m_LowJumpMultiplier - 1) * Time.deltaTime;
         }
