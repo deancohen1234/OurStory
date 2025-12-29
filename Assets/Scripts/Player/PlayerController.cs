@@ -107,13 +107,7 @@ public class PlayerController : MonoBehaviour
 
 
         //add more friction if you are grounded and not moving
-        //if (m_IsGrounded && !bDesiresJump)
-        //{
-        //    if (Mathf.Abs(DesiredX) <= 0.2f)
-        //    {
-        //        m_Rigidbody.linearVelocity *= m_GroundedFrictionDrag;
-        //    }
-        //}
+        AddGroundedFriction();
 
         //Jumping
         if (bDesiresJump)
@@ -159,6 +153,18 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void AddGroundedFriction()
+    {
+        if (m_IsGrounded && !bDesiresJump)
+        {
+            if (Mathf.Abs(DesiredX) <= 0.2f)
+            {
+                float newLinearX = m_Rigidbody.linearVelocity.x * m_GroundedFrictionDrag;
+                m_Rigidbody.linearVelocity = new Vector2(newLinearX, m_Rigidbody.linearVelocity.y);
+            }
+        }
+    }
+
     private void Move(Vector2 moveDirection)
     {
         if (!m_IsOnWall)
@@ -181,7 +187,6 @@ public class PlayerController : MonoBehaviour
             m_Rigidbody.linearVelocity += new Vector2((Mathf.Abs(projectedMoveDirection.x) * (newX - m_Rigidbody.linearVelocity.x)), (Mathf.Abs(projectedMoveDirection.y) * (newY - m_Rigidbody.linearVelocity.y)));
 
             Debug.DrawLine(transform.position, (Vector2)transform.position + new Vector2(m_Rigidbody.linearVelocity.x, m_Rigidbody.linearVelocity.y), Color.white);
-            Debug.Log(desiredLinear);
         }
     }
 
@@ -261,7 +266,8 @@ public class PlayerController : MonoBehaviour
 
         RaycastHit2D Hit = Physics2D.Raycast(transform.position, Vector2.down, 2, m_GroundLayerMask);
 
-        if (Hit.normal != Vector2.zero)
+        //TODO remove magic number
+        if (Hit.normal != Vector2.zero && Vector2.Dot(Hit.normal, Vector2.down) > 0.6f)
         {
             m_GroundNormal = Hit.normal;
         }
