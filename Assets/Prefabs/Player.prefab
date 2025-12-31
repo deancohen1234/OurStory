@@ -134,7 +134,7 @@ MonoBehaviour:
   m_MaxAcceleration: 500
   m_JumpAmount: 8
   m_FallMultiplier: 2.5
-  m_LowJumpMultiplier: 2
+  m_LowJumpMultiplier: 4
   m_SlowFallGravity: -1
   m_HorizontalGlideSpeed: 0.2
   m_VerticalGlideSpeed: 0.1

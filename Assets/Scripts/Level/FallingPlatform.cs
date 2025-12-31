@@ -4,7 +4,9 @@ public class FallingPlatform : MonoBehaviour
 {
     public float m_ShakeFrequency = 1f;
     public float m_ShakeIntensity = 1f;
-    public float m_StableTime = 3f;
+
+    public float m_StableDuration = 3f;
+    public float m_ResetDuration = 3f;
 
     private bool m_bIsCrumbling, m_bIsFalling;
 
@@ -12,7 +14,7 @@ public class FallingPlatform : MonoBehaviour
 
     private Rigidbody2D m_Rigidbody;
 
-    private float m_FallTime;
+    private float m_FallTime, m_ResetTime;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -29,10 +31,15 @@ public class FallingPlatform : MonoBehaviour
             if (Time.time > m_FallTime)
             {
                 //platform has fallen!
-                m_bIsFalling = true;
-                m_bIsCrumbling = false;
-                m_Rigidbody.bodyType = RigidbodyType2D.Dynamic;
-                Debug.Log("Falling For Real");
+                CollapsePlatform();
+            }
+        }
+
+        else if (m_bIsFalling)
+        {
+            if (Time.time > m_ResetTime)
+            {
+                ResetPlatform();
             }
         }
     }
@@ -55,10 +62,26 @@ public class FallingPlatform : MonoBehaviour
     {
         if (!m_bIsCrumbling && !m_bIsFalling)
         {
-            Debug.Log("Starting Fall");
             m_bIsCrumbling = true;
 
-            m_FallTime = Time.time + m_StableTime;
+            m_FallTime = Time.time + m_StableDuration;
         }
+    }
+
+    void CollapsePlatform()
+    {
+        m_bIsFalling = true;
+        m_bIsCrumbling = false;
+        m_Rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        m_ResetTime = Time.time + m_ResetDuration;
+    }
+
+    void ResetPlatform()
+    {
+        m_bIsFalling = false;
+        m_bIsCrumbling = false;
+        m_Rigidbody.bodyType = RigidbodyType2D.Kinematic;
+        m_Rigidbody.MovePosition(StartLocation);
+        m_Rigidbody.linearVelocity = Vector2.zero;
     }
 }

@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     private bool m_CanMove = true;
     private Vector2 m_GroundNormal = Vector2.up;
 
-    private bool m_OnRightWall;
+    private bool m_OnRightWall, m_OnLeftWall;
 
 
     // Start is called before the first frame update
@@ -167,27 +167,36 @@ public class PlayerController : MonoBehaviour
 
     private void Move(Vector2 moveDirection)
     {
-        if (!m_IsOnWall)
+        if (moveDirection.x > 0 && m_OnRightWall)
         {
-            Vector2 normalPerpendicular = Vector2.Perpendicular(m_GroundNormal);
-            Vector2 projectedMoveDirection = normalPerpendicular * Vector2.Dot(normalPerpendicular, moveDirection);
-            projectedMoveDirection = projectedMoveDirection.normalized;
-
-            //float desiredLinearX = Mathf.MoveTowards(m_Rigidbody.linearVelocity.x, projectedMoveDirection.x * m_MoveSpeed * Time.fixedDeltaTime, m_MaxAcceleration * Time.fixedDeltaTime);
-            float desiredLinearX = projectedMoveDirection.x * m_MoveSpeed * Time.fixedDeltaTime;
-            //float desiredLinearY = Mathf.MoveTowards(m_Rigidbody.linearVelocity.y, projectedMoveDirection.y * m_MoveSpeed * Time.fixedDeltaTime, m_MaxAcceleration * Time.fixedDeltaTime);
-            float desiredLinearY = projectedMoveDirection.y * m_MoveSpeed * Time.fixedDeltaTime;
-
-            Vector2 desiredLinear = new Vector2(desiredLinearX, desiredLinearY);
-            desiredLinear = Vector2.ClampMagnitude(desiredLinear, m_MoveSpeed);
-
-            float newX = Mathf.MoveTowards(m_Rigidbody.linearVelocity.x, desiredLinear.x, m_MaxAcceleration * Time.fixedDeltaTime);
-            float newY = Mathf.MoveTowards(m_Rigidbody.linearVelocity.y, desiredLinear.y, m_MaxAcceleration * Time.fixedDeltaTime);
-
-            m_Rigidbody.linearVelocity += new Vector2((Mathf.Abs(projectedMoveDirection.x) * (newX - m_Rigidbody.linearVelocity.x)), (Mathf.Abs(projectedMoveDirection.y) * (newY - m_Rigidbody.linearVelocity.y)));
-
-            Debug.DrawLine(transform.position, (Vector2)transform.position + new Vector2(m_Rigidbody.linearVelocity.x, m_Rigidbody.linearVelocity.y), Color.white);
+            moveDirection.x = 0;
+            Debug.Log("Killing Right X");
         }
+        else if (moveDirection.x < 0 && m_OnLeftWall)
+        {
+            moveDirection.x = 0;
+            Debug.Log("Killing Left X");
+        }
+
+        Vector2 normalPerpendicular = Vector2.Perpendicular(m_GroundNormal);
+        Vector2 projectedMoveDirection = normalPerpendicular * Vector2.Dot(normalPerpendicular, moveDirection);
+        projectedMoveDirection = projectedMoveDirection.normalized;
+
+        //float desiredLinearX = Mathf.MoveTowards(m_Rigidbody.linearVelocity.x, projectedMoveDirection.x * m_MoveSpeed * Time.fixedDeltaTime, m_MaxAcceleration * Time.fixedDeltaTime);
+        float desiredLinearX = projectedMoveDirection.x * m_MoveSpeed * Time.fixedDeltaTime;
+        //float desiredLinearY = Mathf.MoveTowards(m_Rigidbody.linearVelocity.y, projectedMoveDirection.y * m_MoveSpeed * Time.fixedDeltaTime, m_MaxAcceleration * Time.fixedDeltaTime);
+        float desiredLinearY = projectedMoveDirection.y * m_MoveSpeed * Time.fixedDeltaTime;
+
+        Vector2 desiredLinear = new Vector2(desiredLinearX, desiredLinearY);
+        desiredLinear = Vector2.ClampMagnitude(desiredLinear, m_MoveSpeed);
+
+        float newX = Mathf.MoveTowards(m_Rigidbody.linearVelocity.x, desiredLinear.x, m_MaxAcceleration * Time.fixedDeltaTime);
+        float newY = Mathf.MoveTowards(m_Rigidbody.linearVelocity.y, desiredLinear.y, m_MaxAcceleration * Time.fixedDeltaTime);
+
+        m_Rigidbody.linearVelocity += new Vector2((Mathf.Abs(projectedMoveDirection.x) * (newX - m_Rigidbody.linearVelocity.x)), (Mathf.Abs(projectedMoveDirection.y) * (newY - m_Rigidbody.linearVelocity.y)));
+
+        Debug.DrawLine(transform.position, (Vector2)transform.position + new Vector2(m_Rigidbody.linearVelocity.x, m_Rigidbody.linearVelocity.y), Color.white);
+        Debug.DrawLine(transform.position, (Vector2)transform.position + new Vector2((Mathf.Abs(projectedMoveDirection.x) * (newX - m_Rigidbody.linearVelocity.x)), (Mathf.Abs(projectedMoveDirection.y) * (newY - m_Rigidbody.linearVelocity.y))), Color.blue);
     }
 
     private void ApplyConnectionForces()
@@ -255,7 +264,7 @@ public class PlayerController : MonoBehaviour
         if (leftWallCollider != null)
         {
             m_IsOnWall = true;
-            m_OnRightWall = false;
+            m_OnLeftWall = false;
         }
         else if (rightWallCollider != null)
         {
@@ -265,6 +274,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             m_IsOnWall = false;
+            m_OnRightWall = false;
+            m_OnLeftWall = false;
         }
 
 
@@ -328,6 +339,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 150, 90), "IsGrounded: " + m_IsGrounded + "\nIsOnWall: " + m_IsOnWall + "\nIsWallJumping: " + m_IsWallJumping + "\n<color=red>Error: </color>AssetBundle not found");
+        GUI.Label(new Rect(10, 10, 150, 90), "IsGrounded: " + m_IsGrounded + "\nIsOnWall: " + m_IsOnWall + "\nIsWallJumping: " + m_IsWallJumping + "\n<color=red>Error: </color>AssetBundle not found" + "\nIsOnLeftWall: " + m_OnLeftWall + "\nIsOnRightWall: " + m_OnRightWall);
     }
 }
