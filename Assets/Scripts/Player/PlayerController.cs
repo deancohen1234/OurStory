@@ -246,7 +246,11 @@ public class PlayerController : MonoBehaviour
         Collider2D rightWallCollider = Physics2D.OverlapCircle((Vector2)transform.position + m_RightColliderOffset, m_SphereRadius, m_WallLayerMask);
 
         if (groundCollider == null) { m_IsGrounded = false; }
-        else { m_IsGrounded = true; }
+        else 
+        { 
+            m_IsGrounded = true;
+            m_ConnectedBody = groundCollider.transform;
+        }
 
         if (leftWallCollider != null)
         {
