@@ -4,13 +4,35 @@ using System.Collections.Generic;
 public class WindArea : MonoBehaviour
 {
     public float WindForce = 20f;
+    public ParticleSystem System;
+
+    public float ParticleSystemSpeedMin = 4f;
+    public float ParticleSystemSpeedMax = 20f;
+
+    public float WindForceMin = 10f;
+    public float WindForceMax = 100f;
+
 
     private List<Rigidbody2D> m_Rigidbodies;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        m_Rigidbodies = new List<Rigidbody2D>();
+        m_Rigidbodies = new List<Rigidbody2D>();     
+    }
+
+    private void Update()
+    {
+        if (System)
+        {
+            ParticleSystem.VelocityOverLifetimeModule module = System.velocityOverLifetime;
+
+            float normalizedSpeed = Mathf.Clamp(WindForce - WindForceMin, 0, (WindForceMax - WindForceMin)) / (WindForceMax - WindForceMin);
+
+            float multiplier = ((ParticleSystemSpeedMax - ParticleSystemSpeedMin) * normalizedSpeed) + ParticleSystemSpeedMin;
+
+            module.speedModifierMultiplier = multiplier;
+        }
     }
 
     // Update is called once per frame

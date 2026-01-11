@@ -131,7 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 200
-  m_MaxAcceleration: 500
+  m_MaxAcceleration: 20
+  m_MaxAirAcceleration: 10
   m_JumpAmount: 8
   m_FallMultiplier: 2.5
   m_LowJumpMultiplier: 4

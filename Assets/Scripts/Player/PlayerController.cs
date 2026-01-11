@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Move Properties")]
     public float m_MoveSpeed = 5.0f;
     public float m_MaxAcceleration = 5.0f;
+    public float m_MaxAirAcceleration = 5.0f;
     public float m_JumpAmount = 10.0f;
     public float m_FallMultiplier = 2.5f;
     public float m_LowJumpMultiplier = 2.0f;
@@ -190,8 +191,8 @@ public class PlayerController : MonoBehaviour
         Vector2 desiredLinear = new Vector2(desiredLinearX, desiredLinearY);
         desiredLinear = Vector2.ClampMagnitude(desiredLinear, m_MoveSpeed);
 
-        float newX = Mathf.MoveTowards(m_Rigidbody.linearVelocity.x, desiredLinear.x, m_MaxAcceleration * Time.fixedDeltaTime);
-        float newY = Mathf.MoveTowards(m_Rigidbody.linearVelocity.y, desiredLinear.y, m_MaxAcceleration * Time.fixedDeltaTime);
+        float newX = Mathf.MoveTowards(m_Rigidbody.linearVelocity.x, desiredLinear.x, GetAcceleration() * Time.fixedDeltaTime);
+        float newY = Mathf.MoveTowards(m_Rigidbody.linearVelocity.y, desiredLinear.y, GetAcceleration() * Time.fixedDeltaTime);
 
         m_Rigidbody.linearVelocity += new Vector2((Mathf.Abs(projectedMoveDirection.x) * (newX - m_Rigidbody.linearVelocity.x)), (Mathf.Abs(projectedMoveDirection.y) * (newY - m_Rigidbody.linearVelocity.y)));
 
@@ -307,6 +308,18 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         m_Rigidbody.linearVelocity += new Vector2(m_Rigidbody.linearVelocity.x, m_JumpAmount);
+    }
+
+    private float GetAcceleration()
+    {
+        if (m_IsGrounded)
+        {
+            return m_MaxAcceleration;
+        }
+        else
+        {
+            return m_MaxAirAcceleration;
+        }
     }
 
     private IEnumerator DisableMovement(float time)
