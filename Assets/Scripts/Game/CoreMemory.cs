@@ -6,6 +6,8 @@ public class CoreMemory : MonoBehaviour
     public string m_MemoryName;
     public string m_GrabText;
 
+    private const int TRANSITION_SCENE_INDEX = 6;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,6 +31,6 @@ public class CoreMemory : MonoBehaviour
 
     private void OnDisplayLineFinished()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(TRANSITION_SCENE_INDEX);
     }
 }
