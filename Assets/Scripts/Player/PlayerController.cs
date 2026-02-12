@@ -171,12 +171,10 @@ public class PlayerController : MonoBehaviour
         if (moveDirection.x > 0 && m_OnRightWall)
         {
             moveDirection.x = 0;
-            Debug.Log("Killing Right X");
         }
         else if (moveDirection.x < 0 && m_OnLeftWall)
         {
             moveDirection.x = 0;
-            Debug.Log("Killing Left X");
         }
 
         Vector2 normalPerpendicular = Vector2.Perpendicular(m_GroundNormal);

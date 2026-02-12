@@ -4712,6 +4712,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameFeatures
       objectReference: {fileID: 0}
+    - target: {fileID: 6983031818694398338, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: Color1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983031818694398338, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: Color1.b
+      value: 0.11372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983031818694398338, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: Color1.g
+      value: 0.16470589
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983031818694398338, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: Color1.r
+      value: 0.34901962
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983031818694398338, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: Color2.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983031818694398338, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: Color2.b
+      value: 0.11372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983031818694398338, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: Color2.g
+      value: 0.1254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983031818694398338, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: Color2.r
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983031818694398338, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: BackgroundMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: ce207418ad64674428bb087dd70906e9, type: 2}
     - target: {fileID: 7356553977319070081, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

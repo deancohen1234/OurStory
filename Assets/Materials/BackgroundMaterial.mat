@@ -68,13 +68,23 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _MoveSpeed: 0.01
+    - _GradientMoveSpeed: 0.01
+    - _Gradient_Move_Amplitude: 0.1
+    - _Gradient_Move_Frequency: 0.05
+    - _Gradient_Weight: 0.73
+    - _MoveSpeed: 0.32
+    - _Power: 2.97
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Voronoli_Weight: 1.17
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 0.34901962, g: 0.16470589, b: 0.11372549, a: 1}
+    - _Color2: {r: 0.13333334, g: 0.1254902, b: 0.11372549, a: 1}
+    - _Color3: {r: 0.4453504, g: 1, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Tint: {r: 0.6792453, g: 0.3492346, b: 0.3492346, a: 1}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _Tling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
