@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    public delegate void JumpEvent();
+
     [Header("Move Properties")]
     public float m_MoveSpeed = 5.0f;
     public float m_MaxAcceleration = 5.0f;
@@ -45,6 +48,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D m_Rigidbody;
     private Transform m_ConnectedBody;
+
+    private event Action m_JumpEvent;
 
     private Vector2 m_ConnectedBodyWorldPosition;
     private Vector2 m_ConnectedBodyLocalPosition;
@@ -127,6 +132,35 @@ public class PlayerController : MonoBehaviour
         //Debug.DrawLine(transform.position, (Vector2)transform.position + m_Rigidbody.linearVelocity * 5f, Color.white);
 
     }
+
+    //Public getters
+    public bool IsFalling ()
+    {
+        const float MIN_FALL_VELOCITY = 1f;
+        return m_Rigidbody.linearVelocity.y < MIN_FALL_VELOCITY;
+    }
+
+    public bool IsGrounded()
+    {
+        return m_IsGrounded;
+    }
+
+    public bool IsMoving()
+    {
+        const float MIN_MOVE_VELOCITY = 1f;
+        return Mathf.Abs(m_Rigidbody.linearVelocity.x) >= MIN_MOVE_VELOCITY;
+    }
+
+    public void AddEventJump(Action Callback)
+    {
+        m_JumpEvent += Callback;
+    }
+
+    public Vector2 GetVelocityDirection()
+    {
+        return m_Rigidbody.linearVelocity.normalized;
+    }
+
 
     public bool IsStickOnOuterRim(Vector2 stickPosition)
     {
@@ -306,6 +340,8 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         m_Rigidbody.linearVelocity += new Vector2(m_Rigidbody.linearVelocity.x, m_JumpAmount);
+
+        m_JumpEvent?.Invoke();
     }
 
     private float GetAcceleration()
