@@ -6,6 +6,7 @@ using TMPro;
 
 public class SceneAsyncLoader : MonoBehaviour
 {
+    public Animator FadeInAnim;
     public TextMeshProUGUI ContinueText;
 
     private AsyncOperation AsyncLoadingOperation;
@@ -14,6 +15,8 @@ public class SceneAsyncLoader : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        FadeInAnim.SetTrigger("Start");
+
         ContinueText.alpha = 0;
 
         if (DataStore.Instance != null)

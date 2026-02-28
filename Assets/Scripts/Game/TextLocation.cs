@@ -11,7 +11,6 @@ public class TextLocation : MonoBehaviour
     {
         if (TextManager.Singleton != null && !bHasTriggered)
         {
-            Debug.Log("Triggering Text Location " + gameObject.name + " " + other.name);
             if (!bCanRetrigger)
             {
                 bHasTriggered = true;
