@@ -14,6 +14,8 @@ public class TextManager : MonoBehaviour
 
     public float DisplayTime = 10; // in seconds
 
+    private Coroutine ActiveRoutine;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -35,10 +37,16 @@ public class TextManager : MonoBehaviour
     public void DisplayMessage(string Message)
     {
         TextAsset.text = Message;
+        NarrationEffect.StopAllEffects();
+        if (ActiveRoutine != null)
+        {
+            StopCoroutine(ActiveRoutine);
+            ActiveRoutine = null;
+        }
 
         NarrationEffect.StartManualEffect("text-entry");
 
-        StartCoroutine(WaitForDisplayTime(DisplayTime));
+        ActiveRoutine = StartCoroutine(WaitForDisplayTime(DisplayTime));
     }
 
     public void DisplayMessage(string Message, OnDisplayMessageFinished Callback)
