@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d2f27776aadc34880d85e25c69a29f, type: 3}
   m_Name: AtlusNarratorScene
   m_EditorClassIdentifier: 
-  Lines: []
+  Lines:
+  - 
