@@ -339,7 +339,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        m_Rigidbody.linearVelocity += new Vector2(m_Rigidbody.linearVelocity.x, m_JumpAmount);
+        m_Rigidbody.linearVelocity += new Vector2(0, m_JumpAmount);
 
         m_JumpEvent?.Invoke();
     }
