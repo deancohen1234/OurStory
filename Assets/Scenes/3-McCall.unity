@@ -2514,8 +2514,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03c123daeb0564f87422de9b2e49a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: The sunset is beautiful here... But what is the significanc? There has to
-    be a core memory here
+  Text: They share food, stories, and laughs. They people-watch on the beach. It
+    is a rare moment of rest for them both.
   bCanRetrigger: 0
 --- !u!50 &773076296
 Rigidbody2D:
@@ -3110,7 +3110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03c123daeb0564f87422de9b2e49a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: I really need to make sure I put on some sunscreen
+  Text: 'A lovely getaway for the pair. A place of nature, ice cream, and sunsets. '
   bCanRetrigger: 0
 --- !u!50 &918197319
 Rigidbody2D:
@@ -4833,7 +4833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03c123daeb0564f87422de9b2e49a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: McCall huh? It seems lovely here in the summer!
+  Text: The mountains of McCall, a special place for the woman.
   bCanRetrigger: 0
 --- !u!50 &1395747954
 Rigidbody2D:
@@ -9800,8 +9800,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MemoryName: Ice Cream Cone
-  m_GrabText: Found it! It looks like that woman's phone number. It also looks like
-    she spelled her last name wrong?
+  m_GrabText: And on the windy drive back, the man looks over at the woman, and knows
+    for certain that he wants to marry her.
 --- !u!212 &1633677557
 SpriteRenderer:
   m_ObjectHideFlags: 0

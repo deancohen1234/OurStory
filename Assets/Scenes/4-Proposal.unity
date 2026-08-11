@@ -16869,8 +16869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03c123daeb0564f87422de9b2e49a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: My god though that man is holding something in his pocket for dear life!
-    He looks stessed as hell!
+  Text: "His other plan has fallen through, at a sacred family tree he asks the question\u2026"
   bCanRetrigger: 0
 --- !u!50 &773076296
 Rigidbody2D:
@@ -17537,8 +17536,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03c123daeb0564f87422de9b2e49a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: I feel like a botanical gardens would be a much more romantic place for a
-    walk...
+  Text: It is Christmas Eve, and with each step the man gets more nervous, clutching
+    an item in his jacket ever tighter.
   bCanRetrigger: 0
 --- !u!50 &918197319
 Rigidbody2D:
@@ -28081,8 +28080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03c123daeb0564f87422de9b2e49a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: Well this is a harrowing place... And it's Chirstmas Eve... Why would they
-    be going on a walk now?
+  Text: "It is a cold and frozen day, the perfect weather for a long hike\u2026"
   bCanRetrigger: 0
 --- !u!50 &1395747954
 Rigidbody2D:
@@ -38433,7 +38431,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MemoryName: The Ring
-  m_GrabText: The RING! This is their proposal! I must be close!
+  m_GrabText: Before he is even able to finish she says yes, and tackles him to the
+    ground. Despite the cold and exhaustion it is a beautiful moment.
 --- !u!212 &1633677557
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1237,7 +1237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03c123daeb0564f87422de9b2e49a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: Ahh first date it is! Aww they look nervous!
+  Text: She makes it, despite the construction outside. They talk of work, family,
+    and Star Wars.
   bCanRetrigger: 0
 --- !u!50 &773076296
 Rigidbody2D:
@@ -1478,8 +1479,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03c123daeb0564f87422de9b2e49a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: Okay "Atlus Bar"? Okay maybe it's for a girls night out, just after a breakup...
-    a first date?
+  Text: It begins in a small speakeasy, in Boise Idaho. A man waits anxiously for
+    his date to arrive
   bCanRetrigger: 0
 --- !u!50 &918197319
 Rigidbody2D:
@@ -2128,8 +2129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03c123daeb0564f87422de9b2e49a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: Okay, I've got to relax. It's just another time warp, just gotta go and find
-    the core memory and I can move on...
+  Text: This is a tale of a man and woman, falling in love
   bCanRetrigger: 0
 --- !u!50 &1395747954
 Rigidbody2D:
@@ -6266,8 +6266,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MemoryName: Ashley's Phone Number
-  m_GrabText: Found it! It looks like that woman's phone number. It also looks like
-    she spelled her last name wrong?
+  m_GrabText: "They end their date wanting more of each other, and nerves break the
+    woman's fingers as she writes her name in the man's phone. It\u2019s still spelled
+    wrong to this day. "
 --- !u!212 &1633677557
 SpriteRenderer:
   m_ObjectHideFlags: 0
