@@ -161,6 +161,11 @@ public class PlayerController : MonoBehaviour
         return m_Rigidbody.linearVelocity.normalized;
     }
 
+    public float GetVelocitySqrMagnitude()
+    {
+        return m_Rigidbody.linearVelocity.sqrMagnitude;
+    }
+
 
     public bool IsStickOnOuterRim(Vector2 stickPosition)
     {
@@ -386,6 +391,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 150, 90), "IsGrounded: " + m_IsGrounded + "\nIsOnWall: " + m_IsOnWall + "\nIsWallJumping: " + m_IsWallJumping + "\n<color=red>Error: </color>AssetBundle not found" + "\nIsOnLeftWall: " + m_OnLeftWall + "\nIsOnRightWall: " + m_OnRightWall);
+        //GUI.Label(new Rect(10, 10, 150, 90), "IsGrounded: " + m_IsGrounded + "\nIsOnWall: " + m_IsOnWall + "\nIsWallJumping: " + m_IsWallJumping + "\n<color=red>Error: </color>AssetBundle not found" + "\nIsOnLeftWall: " + m_OnLeftWall + "\nIsOnRightWall: " + m_OnRightWall);
     }
 }

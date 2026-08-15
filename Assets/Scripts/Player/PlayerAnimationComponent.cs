@@ -42,10 +42,15 @@ public class PlayerAnimationComponent : MonoBehaviour
 
     private void UpdateDirection()
     {
-        float sign = Mathf.Sign(PlayerController.GetVelocityDirection().x);
+        float sqrMag = PlayerController.GetVelocitySqrMagnitude();
 
-        NewLocalScale.x = sign == 0 ? 1 : sign;
-        transform.localScale = NewLocalScale;
+        if (PlayerController.GetVelocitySqrMagnitude() >= 0.1)
+        {
+            float sign = Mathf.Sign(PlayerController.GetVelocityDirection().x);
+            NewLocalScale.x = sign == 0 ? 1 : sign;
+            transform.localScale = NewLocalScale;
+        }
+        
     }
 
     private void OnJump()

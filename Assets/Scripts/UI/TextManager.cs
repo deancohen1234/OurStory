@@ -23,8 +23,6 @@ public class TextManager : MonoBehaviour
         {
             Singleton = this;
         }
-
-        Debug.Log("Name: " + gameObject.name);
     }
 
     // Update is called once per frame
