@@ -10,11 +10,17 @@ public class TextManager : MonoBehaviour
     public TextMeshProUGUI TextAsset;
     public TextEffect NarrationEffect;
 
+    private AudioSource Source;
+
     public delegate void OnDisplayMessageFinished();
 
     public float DisplayTime = 10; // in seconds
+    public float CharacterSoundDelay = 0.1f;
 
     private Coroutine ActiveRoutine;
+
+    private float NextWordTime;
+    private bool bIsSpeaking;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -23,6 +29,8 @@ public class TextManager : MonoBehaviour
         {
             Singleton = this;
         }
+
+        Source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -32,6 +40,15 @@ public class TextManager : MonoBehaviour
         {
             NarrationEffect.StartManualEffect("text-entry");
         }
+
+        if (bIsSpeaking && Time.time > NextWordTime)
+        {
+            NextWordTime = Time.time + CharacterSoundDelay;
+
+            Source.pitch = Random.Range(0.8f, 1.2f);
+            Source.Play();
+        }
+
     }
 
     public void DisplayMessage(string Message)
@@ -47,6 +64,8 @@ public class TextManager : MonoBehaviour
         NarrationEffect.StartManualEffect("text-entry");
 
         ActiveRoutine = StartCoroutine(WaitForDisplayTime(DisplayTime));
+
+        bIsSpeaking = true;
     }
 
     public void DisplayMessage(string Message, OnDisplayMessageFinished Callback)
@@ -63,6 +82,8 @@ public class TextManager : MonoBehaviour
     public void PostAnimationShowText(TextMeshProUGUI Text)
     {
         Text.alpha = 1;
+        bIsSpeaking = false;
+        Source.Stop();
     }
 
     public void PostAnimationHideText(TextMeshProUGUI Text)
@@ -74,6 +95,9 @@ public class TextManager : MonoBehaviour
     {
         yield return new WaitForSeconds(WaitTime);
 
+        bIsSpeaking = false;
+        Source.Stop();
+
         NarrationEffect.StartManualEffect("text-exit");
     }
 
@@ -81,8 +105,11 @@ public class TextManager : MonoBehaviour
     {
         yield return new WaitForSeconds(WaitTime);
 
+        bIsSpeaking = false;
+        Source.Stop();
+
         NarrationEffect.StartManualEffect("text-exit");
-        
+                
         if (Callback != null)
         {
             Callback.Invoke();
