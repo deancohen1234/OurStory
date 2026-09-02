@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Collectable : MonoBehaviour
+public class Collectable : MonoBehaviour, IPersistentData
 {
     private CollectableManager.OnCollected Delegate;
     private AudioSource AudioSource;
@@ -29,6 +29,17 @@ public class Collectable : MonoBehaviour
         Delegate.DynamicInvoke(this);
 
         Renderer.enabled = false;
+
         Destroy(gameObject, 3);
+    }
+
+    void LoadData(GameData data)
+    {
+
+    }
+
+    void SaveData(ref GameData data)
+    {
+
     }
 }
