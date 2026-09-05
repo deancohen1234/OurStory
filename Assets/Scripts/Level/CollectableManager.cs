@@ -22,8 +22,6 @@ public class CollectableManager : MonoBehaviour
 
     void OnCollectableCollected(Collectable collectable)
     {
-        Debug.Log("Collected!: " + collectable.name);
-
         CanvasGroup Group = CollectableIcons[CollectableIndex].GetComponent<CanvasGroup>();
         Group.alpha = 1;
 

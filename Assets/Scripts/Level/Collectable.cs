@@ -1,36 +1,22 @@
 using UnityEngine;
 
-public class Collectable : MonoBehaviour, IPersistentData
+public class Collectable : Pickupable, IPersistentData
 {
     private CollectableManager.OnCollected Delegate;
     private AudioSource AudioSource;
     private SpriteRenderer Renderer;
 
-    public void Start()
-    {
-        AudioSource = GetComponent<AudioSource>();
-        Renderer = GetComponentInChildren<SpriteRenderer>();
-    }
 
     public void AddListener(CollectableManager.OnCollected Delegate)
     {
         this.Delegate = Delegate;
     }
 
-    void OnTriggerEnter2D()
+    protected override void OnCollected()
     {
-        OnCollected();
-    }
-
-    void OnCollected()
-    {
-        this.AudioSource.Play();
+        base.OnCollected();
 
         Delegate.DynamicInvoke(this);
-
-        Renderer.enabled = false;
-
-        Destroy(gameObject, 3);
     }
 
     void LoadData(GameData data)
