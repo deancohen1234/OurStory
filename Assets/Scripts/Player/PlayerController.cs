@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -86,11 +87,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //get  input
-        DesiredX = Input.GetAxis("Horizontal");
-        DesiredY = Input.GetAxis("Vertical");
+        Gamepad gamepad = Gamepad.current;
 
-        bDesiresJump |= Input.GetButtonDown("Jump");
+        Vector2 stickInput = gamepad.dpad.ReadValue();
+        //get  input
+        DesiredX = stickInput.x;
+        DesiredY = stickInput.y;
+
+        bDesiresJump |= gamepad.buttonSouth.wasPressedThisFrame | gamepad.buttonEast.wasPressedThisFrame | Keyboard.current.spaceKey.wasPressedThisFrame;
     }
 
     private void FixedUpdate()
@@ -336,7 +340,7 @@ public class PlayerController : MonoBehaviour
         }
         //if we are rising
         //needs to be done because once player lets go of jump button harder gravity needs to be applied
-        else if (m_Rigidbody.linearVelocity.y > 0 && !Input.GetButton("Jump") && !m_IsGrounded)
+        else if (m_Rigidbody.linearVelocity.y > 0 && !(Gamepad.current.buttonSouth.wasPressedThisFrame | Gamepad.current.buttonEast.wasPressedThisFrame | Keyboard.current.spaceKey.wasPressedThisFrame) && !m_IsGrounded)
         {
             m_Rigidbody.linearVelocity += m_GroundNormal * Physics2D.gravity.y * (m_LowJumpMultiplier - 1) * Time.deltaTime;
         }

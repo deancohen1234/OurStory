@@ -36,10 +36,6 @@ public class TextManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            NarrationEffect.StartManualEffect("text-entry");
-        }
 
         if (bIsSpeaking && Time.time > NextWordTime)
         {
