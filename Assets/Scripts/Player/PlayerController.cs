@@ -47,6 +47,11 @@ public class PlayerController : MonoBehaviour
     [Header("Connections")]
     public Transform ConnectionOverride;
 
+    [Header("Input")]
+    private DefaultInputActions DefaultInputActions;
+    private InputAction Movement;
+    private InputAction JumpAction;
+
     private Rigidbody2D m_Rigidbody;
     private Transform m_ConnectedBody;
 
@@ -70,6 +75,10 @@ public class PlayerController : MonoBehaviour
 
     private bool m_OnRightWall, m_OnLeftWall;
 
+    private void Awake()
+    {
+        DefaultInputActions = new DefaultInputActions();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -84,17 +93,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        Movement = DefaultInputActions.Player.Movement;
+        Movement.Enable();
+
+        JumpAction = DefaultInputActions.Player.Jump;
+        JumpAction.Enable();
+    }
+
     // Update is called once per frame
     void Update()
     {
         Gamepad gamepad = Gamepad.current;
 
-        Vector2 stickInput = gamepad.dpad.ReadValue();
+        //Vector2 stickInput = gamepad.dpad.ReadValue();
+        Vector2 stickInput = Movement.ReadValue<Vector2>();
         //get  input
         DesiredX = stickInput.x;
         DesiredY = stickInput.y;
 
-        bDesiresJump |= gamepad.buttonSouth.wasPressedThisFrame | gamepad.buttonEast.wasPressedThisFrame | Keyboard.current.spaceKey.wasPressedThisFrame;
+        bDesiresJump |= JumpAction.WasPressedThisFrame();
+
+        Debug.Log("Is Pressed: " + bDesiresJump);
     }
 
     private void FixedUpdate()
@@ -125,6 +146,7 @@ public class PlayerController : MonoBehaviour
             bDesiresJump = false;
             if (m_IsGrounded)
             {
+                Debug.Log("Jumping");
                 Jump();
             }
         }
@@ -338,12 +360,14 @@ public class PlayerController : MonoBehaviour
             //- 1 to account for physics already applying 1 force of gravity
             m_Rigidbody.linearVelocity += m_GroundNormal * Physics2D.gravity.y * (m_FallMultiplier - 1) * Time.deltaTime;
         }
+
         //if we are rising
         //needs to be done because once player lets go of jump button harder gravity needs to be applied
-        else if (m_Rigidbody.linearVelocity.y > 0 && !(Gamepad.current.buttonSouth.wasPressedThisFrame | Gamepad.current.buttonEast.wasPressedThisFrame | Keyboard.current.spaceKey.wasPressedThisFrame) && !m_IsGrounded)
+        else if (m_Rigidbody.linearVelocity.y > 0 && !(JumpAction.IsPressed()) && !m_IsGrounded)
         {
             m_Rigidbody.linearVelocity += m_GroundNormal * Physics2D.gravity.y * (m_LowJumpMultiplier - 1) * Time.deltaTime;
         }
+        
     }
 
     private void Jump()

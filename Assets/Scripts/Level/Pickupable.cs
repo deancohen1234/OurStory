@@ -5,7 +5,7 @@ public class Pickupable : MonoBehaviour, IPersistentData
     private AudioSource AudioSource;
     private SpriteRenderer Renderer;
 
-    public void Start()
+    public virtual void Start()
     {
         AudioSource = GetComponent<AudioSource>();
         Renderer = GetComponentInChildren<SpriteRenderer>();
