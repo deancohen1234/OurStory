@@ -92,6 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 745256568434244788}
   - component: {fileID: 6145484659221205070}
+  - component: {fileID: 1778814300092554997}
   m_Layer: 0
   m_Name: CollectableManager
   m_TagString: Untagged
@@ -126,7 +127,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9166a201412320f4d9419ec15a245a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Colllectables: []
+  Colllectables:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  CollectableIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &1778814300092554997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5085628395192732296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6adfb3e1ceb6e418ad6e8dab9997dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 0}
 --- !u!1 &8064528377193596441
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8525588024579816938}
   - component: {fileID: 8258305561328790307}
+  - component: {fileID: 8943887967622358683}
   m_Layer: 0
   m_Name: DataStore
   m_TagString: Untagged
@@ -169,5 +191,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21640dd8c19211541a3847f0e65ca67f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8943887967622358683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8064528377193596441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d480cf4a1a26e94e93f0cc763d9c535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

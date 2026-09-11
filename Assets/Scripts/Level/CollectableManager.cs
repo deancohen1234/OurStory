@@ -9,7 +9,10 @@ public class CollectableManager : MonoBehaviour
 
     private int CollectableIndex;
 
+    private OnCoinCollected GlobalDelegate;
+
     public delegate void OnCollected(Collectable collectable);
+    public delegate void OnCoinCollected(Pickupable coin);
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,5 +29,22 @@ public class CollectableManager : MonoBehaviour
         Group.alpha = 1;
 
         CollectableIndex++;
+
+        
+    }
+
+    public void OnPickupableCollected(Pickupable coin)
+    {
+        GlobalDelegate.DynamicInvoke(coin);
+    }
+
+    public void SubscribeToOnCoinCollected(OnCoinCollected eventDelegate)
+    {
+        GlobalDelegate += eventDelegate;
+    }
+
+    public void UnsubscribeToOnCoinCollected(OnCoinCollected eventDelegate)
+    {
+        GlobalDelegate -= eventDelegate;
     }
 }

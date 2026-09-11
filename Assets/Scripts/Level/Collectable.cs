@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Collectable : Pickupable, IPersistentData
+public class Collectable : Pickupable
 {
     private CollectableManager.OnCollected Delegate;
 

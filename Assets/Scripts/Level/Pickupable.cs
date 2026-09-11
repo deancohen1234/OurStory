@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Pickupable : MonoBehaviour, IPersistentData
+public class Pickupable : MonoBehaviour
 {
     private AudioSource AudioSource;
     private SpriteRenderer Renderer;
@@ -23,15 +23,5 @@ public class Pickupable : MonoBehaviour, IPersistentData
         Renderer.enabled = false;
 
         Destroy(gameObject, 3);
-    }
-
-    void LoadData(GameData data)
-    {
-
-    }
-
-    void SaveData(ref GameData data)
-    {
-
     }
 }

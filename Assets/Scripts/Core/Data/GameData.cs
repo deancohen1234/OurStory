@@ -10,6 +10,12 @@ public class GameData
 
     public Dictionary<int, bool> CollectableObtainedMap;
 
+    public GameData()
+    {
+        TotalCoins = 0;
+        TotalCollectablesObtained = 0;
+    }
+
     public bool IsCollected(int index)
     {
         return CollectableObtainedMap[index];

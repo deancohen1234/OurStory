@@ -114,8 +114,6 @@ public class PlayerController : MonoBehaviour
         DesiredY = stickInput.y;
 
         bDesiresJump |= JumpAction.WasPressedThisFrame();
-
-        Debug.Log("Is Pressed: " + bDesiresJump);
     }
 
     private void FixedUpdate()
