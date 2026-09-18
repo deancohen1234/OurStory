@@ -3,18 +3,11 @@ using UnityEngine;
 
 public class CounterContainer : MonoBehaviour, IPersistentData
 {
-    public TextMeshProUGUI Text;
-
     protected CollectableManager CollectableManager;
 
     private void Awake()
     {
         CollectableManager = FindAnyObjectByType<CollectableManager>();
-    }
-
-    public virtual void Start()
-    {
-        CollectableManager.SubscribeToOnCoinCollected(OnCollected);
     }
 
     protected virtual void OnCollected(Pickupable coin)
@@ -35,6 +28,6 @@ public class CounterContainer : MonoBehaviour, IPersistentData
 
     private void OnDestroy()
     {
-        CollectableManager.UnsubscribeToOnCoinCollected(OnCollected);
+        CollectableManager.UnsubscribeToCoinCollected(OnCollected);
     }
 }

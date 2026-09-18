@@ -3,48 +3,43 @@ using UnityEngine.UI;
 
 public class CollectableManager : MonoBehaviour
 {
-    public Collectable[] Colllectables;
-
-    public GameObject[] CollectableIcons;
+    public Orb[] Colllectables;
 
     private int CollectableIndex;
 
-    private OnCoinCollected GlobalDelegate;
+    private OnOrbCollectedEvent OnOrbCollectedDelegate;
+    private OnCoinCollectedEvent OnCoinCollectedDelegate;
 
-    public delegate void OnCollected(Collectable collectable);
-    public delegate void OnCoinCollected(Pickupable coin);
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public delegate void OnOrbCollectedEvent(Orb collectable);
+    public delegate void OnCoinCollectedEvent(Coin coin);
+
+    public void OnCoinCollected(Coin coin)
     {
-        for (int i = 0; i < Colllectables.Length; i++)
-        {
-            OnCollected onCollectedDelegate = OnCollectableCollected;
-            Colllectables[i].AddListener(onCollectedDelegate);
-        }
+        OnCoinCollectedDelegate.DynamicInvoke(coin);
     }
 
-    void OnCollectableCollected(Collectable collectable)
+    public void OnOrbCollected(Orb orb)
     {
-        CanvasGroup Group = CollectableIcons[CollectableIndex].GetComponent<CanvasGroup>();
-        Group.alpha = 1;
-
-        CollectableIndex++;
-
-        
+        OnOrbCollectedDelegate.DynamicInvoke(orb);
     }
 
-    public void OnPickupableCollected(Pickupable coin)
+    public void SubscribeToOrbCollected(OnOrbCollectedEvent eventDelegate)
     {
-        GlobalDelegate.DynamicInvoke(coin);
+        OnOrbCollectedDelegate += eventDelegate;
     }
 
-    public void SubscribeToOnCoinCollected(OnCoinCollected eventDelegate)
+    public void UnsubscribeToOrbCollected(OnOrbCollectedEvent eventDelegate)
     {
-        GlobalDelegate += eventDelegate;
+        OnOrbCollectedDelegate -= eventDelegate;
     }
 
-    public void UnsubscribeToOnCoinCollected(OnCoinCollected eventDelegate)
+    public void SubscribeToCoinCollected(OnCoinCollectedEvent eventDelegate)
     {
-        GlobalDelegate -= eventDelegate;
+        OnCoinCollectedDelegate += eventDelegate;
+    }
+
+    public void UnsubscribeToCoinCollected(OnCoinCollectedEvent eventDelegate)
+    {
+        OnCoinCollectedDelegate -= eventDelegate;
     }
 }

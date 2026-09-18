@@ -8,27 +8,25 @@ public class Coin : Pickupable
 
     private float StartingYValue = 0;
 
-    private CollectableManager CollectableManager;
-
     public override void Start()
     {
         base.Start();
-        this.CollectableManager = FindAnyObjectByType<CollectableManager>();
 
-        StartingYValue = transform.position.y;
+        StartingYValue = transform.localPosition.y;
     }
 
     private void Update()
     {
-        float yOffset = Mathf.Sin((Time.time + (transform.position.x * XMultiplier)) * Frequency) * Amplitude;
-        Vector2 newPosition = new Vector2 (transform.position.x, StartingYValue + yOffset);
+        float yOffset = Mathf.Sin((Time.time + (transform.localPosition.x * XMultiplier)) * Frequency) * Amplitude;
+        Vector2 newPosition = new Vector2 (transform.localPosition.x, StartingYValue + yOffset);
 
-        transform.position = newPosition;
+        transform.localPosition = newPosition;
     }
 
     protected override void OnCollected()
     {
         base.OnCollected();
-        this.CollectableManager.OnPickupableCollected(this);
+
+        this.CollectableManager.OnCoinCollected(this);
     }
 }

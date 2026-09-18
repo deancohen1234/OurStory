@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 745256568434244788}
   - component: {fileID: 6145484659221205070}
   - component: {fileID: 1778814300092554997}
+  - component: {fileID: 1217708954134681821}
   m_Layer: 0
   m_Name: CollectableManager
   m_TagString: Untagged
@@ -131,10 +132,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  CollectableIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &1778814300092554997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +145,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Text: {fileID: 0}
+--- !u!114 &1217708954134681821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5085628395192732296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0c8ac4568a37c4fb4d3a6e93f5fe49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 0}
+  OrbIcons: []
+  OrbGuids: []
 --- !u!1 &8064528377193596441
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,3 +217,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d480cf4a1a26e94e93f0cc763d9c535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FileName: SaveData.game

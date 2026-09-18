@@ -8,16 +8,17 @@ public class GameData
 
     public int TotalCollectablesObtained;
 
-    public Dictionary<int, bool> CollectableObtainedMap;
+    public SerializeableDictionary<string, bool> OrbObtainedMap;
 
     public GameData()
     {
         TotalCoins = 0;
         TotalCollectablesObtained = 0;
+        OrbObtainedMap = new SerializeableDictionary<string, bool>();
     }
 
-    public bool IsCollected(int index)
+    public bool IsCollected(string id)
     {
-        return CollectableObtainedMap[index];
+        return OrbObtainedMap[id];
     }
 }
