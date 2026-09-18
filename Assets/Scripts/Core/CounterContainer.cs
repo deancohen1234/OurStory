@@ -7,8 +7,6 @@ public class CounterContainer : MonoBehaviour, IPersistentData
 
     protected CollectableManager CollectableManager;
 
-    private int TotalCoinsCollected;
-
     private void Awake()
     {
         CollectableManager = FindAnyObjectByType<CollectableManager>();
