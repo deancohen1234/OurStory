@@ -102,6 +102,12 @@ public class PlayerController : MonoBehaviour
         JumpAction.Enable();
     }
 
+    private void OnDisable()
+    {
+        Movement.Disable();
+        JumpAction.Disable();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -144,7 +150,6 @@ public class PlayerController : MonoBehaviour
             bDesiresJump = false;
             if (m_IsGrounded)
             {
-                Debug.Log("Jumping");
                 Jump();
             }
         }

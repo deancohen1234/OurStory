@@ -408,6 +408,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1217708954134681821, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: OrbGuids.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1217708954134681821, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: OrbIcons.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1217708954134681821, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: 'OrbGuids.Array.data[0]'
+      value: 67010f9a-123b-438b-8155-92fe31cfff12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1217708954134681821, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: 'OrbGuids.Array.data[1]'
+      value: e0c5d89c-48ef-4c62-9c9d-897fdf164be1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1217708954134681821, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: 'OrbGuids.Array.data[2]'
+      value: dbc17412-5b61-4a6a-a171-9833da3397ff
+      objectReference: {fileID: 0}
+    - target: {fileID: 1217708954134681821, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: 'OrbIcons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1112096845}
+    - target: {fileID: 1217708954134681821, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: 'OrbIcons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1112096844}
+    - target: {fileID: 1217708954134681821, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
+      propertyPath: 'OrbIcons.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1112096843}
     - target: {fileID: 1778814300092554997, guid: 267a5116f3afe224c85f918d2544e893, type: 3}
       propertyPath: Text
       value: 
@@ -7173,6 +7205,10 @@ PrefabInstance:
     - target: {fileID: 2325744161356923505, guid: 6fefd742da581ab4d9219e85568197c8, type: 3}
       propertyPath: m_Name
       value: CollectableCoin
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075129832477586516, guid: 6fefd742da581ab4d9219e85568197c8, type: 3}
+      propertyPath: ID
+      value: 67010f9a-123b-438b-8155-92fe31cfff12
       objectReference: {fileID: 0}
     - target: {fileID: 8271525544649572954, guid: 6fefd742da581ab4d9219e85568197c8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15641,6 +15677,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CollectableCoin (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8075129832477586516, guid: 6fefd742da581ab4d9219e85568197c8, type: 3}
+      propertyPath: ID
+      value: dbc17412-5b61-4a6a-a171-9833da3397ff
+      objectReference: {fileID: 0}
     - target: {fileID: 8271525544649572954, guid: 6fefd742da581ab4d9219e85568197c8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 103.57
@@ -17150,6 +17190,10 @@ PrefabInstance:
     - target: {fileID: 2325744161356923505, guid: 6fefd742da581ab4d9219e85568197c8, type: 3}
       propertyPath: m_Name
       value: CollectableCoin (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075129832477586516, guid: 6fefd742da581ab4d9219e85568197c8, type: 3}
+      propertyPath: ID
+      value: e0c5d89c-48ef-4c62-9c9d-897fdf164be1
       objectReference: {fileID: 0}
     - target: {fileID: 8271525544649572954, guid: 6fefd742da581ab4d9219e85568197c8, type: 3}
       propertyPath: m_LocalPosition.x

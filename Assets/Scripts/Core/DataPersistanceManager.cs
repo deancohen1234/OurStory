@@ -15,11 +15,15 @@ public class DataPersistanceManager : MonoBehaviour
 
     private List<IPersistentData> DataPersistenceObjects;
 
+    private bool bBlockLoading = false;
+
     private void Awake()
     {
         if (Instance != null)
         {
-            Debug.LogError("More than one Data Persistance Manager found in scene!");
+            //this is the extra data manager
+            bBlockLoading = true;
+            return;
         }
 
         Instance = this;
@@ -27,9 +31,25 @@ public class DataPersistanceManager : MonoBehaviour
 
     private void Start()
     {
+        if (bBlockLoading)
+        {
+            return;
+        }
+
         FileDataHandler = new FileDataHandler(Application.persistentDataPath, FileName);
 
         DataPersistenceObjects = FindAllDataPersistenceObjects();
+        LoadGame();
+    }
+
+    //clear old DataPersistenceObjects and then load game
+    public void LoadNewLevel()
+    {
+        DataPersistenceObjects.Clear();
+        DataPersistenceObjects = FindAllDataPersistenceObjects();
+
+        Debug.Log("Loading new Level: " + DataPersistenceObjects.Count);
+
         LoadGame();
     }
 

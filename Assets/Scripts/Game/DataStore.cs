@@ -19,6 +19,9 @@ public class DataStore : MonoBehaviour
         }
         else
         {
+            //load game data before destroyed extra datastore
+            Instance.gameObject.GetComponent<DataPersistanceManager>().LoadNewLevel();
+
             Destroy(gameObject);
         }
     }

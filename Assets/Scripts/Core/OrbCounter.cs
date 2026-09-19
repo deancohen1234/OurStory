@@ -64,12 +64,20 @@ public class OrbCounter : CounterContainer
 
     private void UpdateUI()
     {
+        foreach (GameObject OrbIconObj in OrbIcons)
+        {
+            CanvasGroup Group = OrbIconObj.GetComponent<CanvasGroup>();
+            Group.alpha = 0;
+        }
+
+
         foreach (string key in OrbsCollectedMap.Keys)
         {
             for (int i = 0; i < OrbGuids.Length; i++)
             {
                 if (key == OrbGuids[i])
                 {
+                    Debug.Log("Found Save Data for : " + key);
                     bool bIsActive = OrbsCollectedMap[key];
 
                     CanvasGroup Group = OrbIcons[i].GetComponent<CanvasGroup>();
