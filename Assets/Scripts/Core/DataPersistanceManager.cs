@@ -31,6 +31,7 @@ public class DataPersistanceManager : MonoBehaviour
 
     private void Start()
     {
+        //if there already is a Data Persistence Manager running, then don't try and load in objects
         if (bBlockLoading)
         {
             return;
@@ -43,12 +44,11 @@ public class DataPersistanceManager : MonoBehaviour
     }
 
     //clear old DataPersistenceObjects and then load game
+    //called from DataStore
     public void LoadNewLevel()
     {
         DataPersistenceObjects.Clear();
         DataPersistenceObjects = FindAllDataPersistenceObjects();
-
-        Debug.Log("Loading new Level: " + DataPersistenceObjects.Count);
 
         LoadGame();
     }
