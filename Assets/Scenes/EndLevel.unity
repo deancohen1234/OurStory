@@ -459,6 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5f589791597504f95ea985330cc7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Text: {fileID: 2007658568}
   NarrationEffect: {fileID: 2007658567}
   Animator: {fileID: 1209341788}
 --- !u!1 &1219524059
@@ -638,7 +639,7 @@ MonoBehaviour:
   tagEffects: []
   globalEffects:
   - triggerWhen: 1
-    effect: {fileID: 11400000, guid: cd6934e89fb419041816ea63743950d1, type: 2}
+    effect: {fileID: 11400000, guid: 1d267b819efde874081d6d4fc98694a5, type: 2}
     onEffectCompleted:
       m_PersistentCalls:
         m_Calls: []
@@ -664,8 +665,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Gee whiz this is a super duper long piece of text that will take verrrrrrrrrrrrrrry
-    long time to fully see
+  m_text: "\u201CAshley, I love you so much. You have stood by me through thick and
+    thin. You have been a stable rock through which I have been able to live my life
+    more fully than I ever expected. You are my person and I will never let you go.
+    And I want to not only treasure the memories we have made in the past, but form
+    new ones for the rest of life together. I love you, so much.\u201D"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c469635e6ad538d4e903d9cf6eb291c7, type: 2}
   m_sharedMaterial: {fileID: -8342847740160073826, guid: c469635e6ad538d4e903d9cf6eb291c7, type: 2}

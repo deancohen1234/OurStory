@@ -6,6 +6,7 @@ public class MainMenuNavigation : MonoBehaviour
 
     public CanvasGroup MainMenuGroup;
     public CanvasGroup FileSelectGroup;
+    public CanvasGroup CreditsGroup;
 
     public GameObject DefaultSelectedObject;
 
@@ -14,7 +15,8 @@ public class MainMenuNavigation : MonoBehaviour
     public enum MenuSection 
     { 
         MainMenu = 0,
-        FileSelect = 1
+        FileSelect = 1,
+        Credits = 2
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -44,6 +46,9 @@ public class MainMenuNavigation : MonoBehaviour
             case MenuSection.FileSelect:
                 EnableGroup(FileSelectGroup);
                 break;
+            case MenuSection.Credits:
+                EnableGroup(CreditsGroup);
+                break;
         }
 
         SetSelection();
@@ -53,6 +58,7 @@ public class MainMenuNavigation : MonoBehaviour
     {
         DisableGroup(MainMenuGroup);
         DisableGroup(FileSelectGroup);
+        DisableGroup(CreditsGroup);
     }
 
     private void EnableGroup(MenuSection section)
@@ -66,6 +72,9 @@ public class MainMenuNavigation : MonoBehaviour
                 break;
             case MenuSection.FileSelect:
                 EnableGroup(FileSelectGroup);
+                break;
+            case MenuSection.Credits:
+                EnableGroup(CreditsGroup);
                 break;
         }
     }

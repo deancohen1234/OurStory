@@ -1396,7 +1396,7 @@ Transform:
   m_GameObject: {fileID: 918197316}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 41.02, y: 12.34, z: -0.001059358}
+  m_LocalPosition: {x: 79.12, y: 20.36, z: -0.001059358}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1414,7 +1414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03c123daeb0564f87422de9b2e49a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: Once I activate this I should be home free!
+  Text: "I wouldn\u2019t have done it with anyone else"
   bCanRetrigger: 0
 --- !u!50 &918197319
 Rigidbody2D:

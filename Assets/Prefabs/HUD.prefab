@@ -119,8 +119,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TextAsset: {fileID: 5922717935629421242}
   NarrationEffect: {fileID: 7461272978616975698}
+  AudioClips:
+  - {fileID: 8300000, guid: 69f2a586590cabc4986fc9a5e94e5152, type: 3}
+  - {fileID: 8300000, guid: 7a402d7d0b148434585abc49f1abcb42, type: 3}
+  - {fileID: 8300000, guid: 95b051b92ad5eb64cacb4d9c9d05bd21, type: 3}
   DisplayTime: 6
-  CharacterSoundDelay: 1
+  CharacterSoundDelay: 0.5
 --- !u!82 &8232956809967678150
 AudioSource:
   m_ObjectHideFlags: 0
