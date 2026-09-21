@@ -1,10 +1,15 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MainMenuNavigation : MonoBehaviour
 {
 
     public CanvasGroup MainMenuGroup;
     public CanvasGroup FileSelectGroup;
+
+    public GameObject DefaultSelectedObject;
+
+    private MenuSection CurrentSelection;
 
     public enum MenuSection 
     { 
@@ -27,6 +32,8 @@ public class MainMenuNavigation : MonoBehaviour
 
     public void OnButtonSelected(MenuSection section)
     {
+        CurrentSelection = section;
+
         DisableAllGroups();
 
         switch (section)
@@ -38,6 +45,8 @@ public class MainMenuNavigation : MonoBehaviour
                 EnableGroup(FileSelectGroup);
                 break;
         }
+
+        SetSelection();
     }
 
     private void DisableAllGroups()
@@ -73,5 +82,20 @@ public class MainMenuNavigation : MonoBehaviour
         group.alpha = 0;
         group.interactable = false;
         group.blocksRaycasts = false;
+    }
+
+    private void SetSelection()
+    {
+        switch (CurrentSelection)
+        {
+            case MenuSection.MainMenu:
+                EventSystem.current.SetSelectedGameObject(DefaultSelectedObject);
+                break;
+
+            case MenuSection.FileSelect:
+                SaveSlot slot = gameObject.GetComponentInChildren<SaveSlot>();
+                EventSystem.current.SetSelectedGameObject(slot.gameObject);
+                break;
+        }
     }
 }

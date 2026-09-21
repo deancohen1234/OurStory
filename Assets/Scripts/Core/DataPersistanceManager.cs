@@ -8,7 +8,7 @@ public class DataPersistanceManager : MonoBehaviour
 
     [Header("File Storage Config")]
     [SerializeField]
-    private string FileName;
+    private string DefaultFileName;
 
     private GameData GameData;
     private FileDataHandler FileDataHandler;
@@ -37,7 +37,14 @@ public class DataPersistanceManager : MonoBehaviour
             return;
         }
 
-        FileDataHandler = new FileDataHandler(Application.persistentDataPath, FileName);
+        //use save data if it exists
+        string fileName = DefaultFileName;
+        if (PlayerPrefs.HasKey("SaveFileName"))
+        {
+            fileName = PlayerPrefs.GetString("SaveFileName");
+        }
+
+        FileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
 
         DataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();

@@ -215,6 +215,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Save Slot 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8391154123361589185, guid: 8736d60a09c401d4b85864674c013b67, type: 3}
+      propertyPath: SaveDataName
+      value: SaveData3.save
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5807,6 +5811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainMenuGroup: {fileID: 2124871008}
   FileSelectGroup: {fileID: 1662937530}
+  DefaultSelectedObject: {fileID: 1033705508}
 --- !u!1 &977399653
 GameObject:
   m_ObjectHideFlags: 0
@@ -11686,6 +11691,14 @@ PrefabInstance:
     - target: {fileID: 5828346111133865790, guid: 8736d60a09c401d4b85864674c013b67, type: 3}
       propertyPath: m_text
       value: Save Slot 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8391154123361589185, guid: 8736d60a09c401d4b85864674c013b67, type: 3}
+      propertyPath: SaveDataName
+      value: SaveData2.save
+      objectReference: {fileID: 0}
+    - target: {fileID: 8391154123361589185, guid: 8736d60a09c401d4b85864674c013b67, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
