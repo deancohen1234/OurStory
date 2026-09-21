@@ -34,7 +34,6 @@ public class SceneAsyncLoader : MonoBehaviour
     {
         if (AsyncLoadingOperation != null)
         {
-            Debug.Log("Progress: " + AsyncLoadingOperation.progress);
             if (AsyncLoadingOperation.progress >= 0.9f)
             {
                 AsyncOperationCompleted();

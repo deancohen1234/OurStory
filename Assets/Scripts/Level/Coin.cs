@@ -6,6 +6,8 @@ public class Coin : Pickupable
     public float Frequency = 1.0f;
     public float XMultiplier = 1.0f;
 
+    public ParticleSystem CollectedSystem;
+
     private float StartingYValue = 0;
 
     public override void Start()
@@ -28,5 +30,6 @@ public class Coin : Pickupable
         base.OnCollected();
 
         this.CollectableManager.OnCoinCollected(this);
+        CollectedSystem.Play();
     }
 }

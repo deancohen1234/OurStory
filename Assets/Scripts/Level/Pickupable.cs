@@ -34,6 +34,7 @@ public class Pickupable : MonoBehaviour
 
     protected virtual void OnCollected()
     {
+        AudioSource.pitch = Random.Range(0.85f, 1.15f);
         this.AudioSource.Play();
 
         DestroyPickupable();

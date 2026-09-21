@@ -77,7 +77,6 @@ public class OrbCounter : CounterContainer
             {
                 if (key == OrbGuids[i])
                 {
-                    Debug.Log("Found Save Data for : " + key);
                     bool bIsActive = OrbsCollectedMap[key];
 
                     CanvasGroup Group = OrbIcons[i].GetComponent<CanvasGroup>();

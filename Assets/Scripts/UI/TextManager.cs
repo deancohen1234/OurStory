@@ -10,6 +10,8 @@ public class TextManager : MonoBehaviour
     public TextMeshProUGUI TextAsset;
     public TextEffect NarrationEffect;
 
+    public AudioClip[] AudioClips;
+
     private AudioSource Source;
 
     public delegate void OnDisplayMessageFinished();
@@ -20,7 +22,12 @@ public class TextManager : MonoBehaviour
     private Coroutine ActiveRoutine;
 
     private float NextWordTime;
+    private float SpeakingEndTime;
     private bool bIsSpeaking;
+
+    private const float DURATION_PER_CHAR = 0.005f;
+    private const float TIME_BETWEEN_CHAR = 0.025f;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -37,9 +44,16 @@ public class TextManager : MonoBehaviour
     void Update()
     {
 
+        if (bIsSpeaking && Time.time > SpeakingEndTime)
+        {
+            bIsSpeaking = false;
+        }
+
         if (bIsSpeaking && Time.time > NextWordTime)
         {
             NextWordTime = Time.time + CharacterSoundDelay;
+
+            Source.clip = GetRandomClip();
 
             Source.pitch = Random.Range(0.8f, 1.2f);
             Source.Play();
@@ -61,6 +75,8 @@ public class TextManager : MonoBehaviour
 
         ActiveRoutine = StartCoroutine(WaitForDisplayTime(DisplayTime));
 
+        SpeakingEndTime = Time.time + GetTextTime(Message);
+
         bIsSpeaking = true;
     }
 
@@ -79,6 +95,7 @@ public class TextManager : MonoBehaviour
     {
         Text.alpha = 1;
         bIsSpeaking = false;
+
         Source.Stop();
     }
 
@@ -110,5 +127,20 @@ public class TextManager : MonoBehaviour
         {
             Callback.Invoke();
         }
+    }
+
+    private AudioClip GetRandomClip()
+    {
+        return AudioClips[Random.Range(0, AudioClips.Length)];
+    }
+
+    private float GetTextTime(string text)
+    {
+        int charCount = text.ToCharArray().Length;
+
+        float charDuration = charCount * DURATION_PER_CHAR;
+        float timeBetweenChars = charCount * TIME_BETWEEN_CHAR;
+
+        return charDuration + timeBetweenChars;
     }
 }
