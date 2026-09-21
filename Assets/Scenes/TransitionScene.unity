@@ -679,7 +679,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70.45
+  m_fontSize: 67.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -747,6 +747,13 @@ MonoBehaviour:
   - Did you know Ashley's favorite color is purple?
   - Ashley could live a truly happy life on having popcorn for dinner!
   - Ashley is insanely good at Lunar-tics in Mario Party 6
+  - Ashley is kinda the baddest bitch around
+  - Did you know Ashley likes running!
+  - Ashley is very fearful of spiders
+  - Did you know Ashley has been to Europe?!
+  - Ashley actually knows the ins and outs of football!
+  - Ashley made a beautiful house in Minecraft recently!
+  - Ashley loves hoarding boxes
 --- !u!114 &1776109969
 MonoBehaviour:
   m_ObjectHideFlags: 0
