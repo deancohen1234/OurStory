@@ -8,6 +8,7 @@ public class LevelIdentifier : MonoBehaviour
     public Color Color2;
 
     public Material BackgroundMaterial;
+    public Animator StartLevelAnimator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,5 +19,7 @@ public class LevelIdentifier : MonoBehaviour
 
         BackgroundMaterial.SetColor("_Color1", Color1);
         BackgroundMaterial.SetColor("_Color2", Color2);
+
+        StartLevelAnimator.SetTrigger("StartLevel");
     }
 }
