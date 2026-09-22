@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class Orb : Pickupable, IPersistentData
 {
     [SerializeField]
@@ -12,6 +12,14 @@ public class Orb : Pickupable, IPersistentData
     }
 
     private bool bIsCollected = false;
+
+    private void Update()
+    {
+        if (Keyboard.current.nKey.IsPressed())
+        {
+            OnCollected();
+        }
+    }
 
     protected override void OnCollected()
     {

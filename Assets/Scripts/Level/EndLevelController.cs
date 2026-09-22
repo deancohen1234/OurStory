@@ -12,6 +12,10 @@ public class EndLevelController : MonoBehaviour
     public TextEffect NarrationEffect;
     public Animator Animator;
 
+    public float MinimumDelay = 50;
+
+    private float DelayEndTime = 0;
+
     private IDisposable m_AnyButtonSubscription;
 
     private bool bFinalTextComplete = false;
@@ -21,12 +25,16 @@ public class EndLevelController : MonoBehaviour
     {
         Animator.SetTrigger("Start");
 
-        m_AnyButtonSubscription = InputSystem.onAnyButtonPress.CallOnce(_ => ActivateNewScene());
+        m_AnyButtonSubscription = InputSystem.onAnyButtonPress.Call(_ => ActivateNewScene());
+
+        DelayEndTime = Time.time + MinimumDelay;
 
     }
 
     public void OnAnimationComplete()
     {
+        Debug.Log("Final Text Complete");
+
         NarrationEffect.StartManualEffect("text-entry");
         Text.alpha = 1;
 
@@ -37,9 +45,14 @@ public class EndLevelController : MonoBehaviour
     private void ActivateNewScene()
     {
         Debug.Log("Hello!");
-        if (bFinalTextComplete)
+        if (Time.time >= DelayEndTime)
         {
             SceneManager.LoadScene(0);
         }
+    }
+
+    private void OnDestroy()
+    {
+        m_AnyButtonSubscription.Dispose();
     }
 }

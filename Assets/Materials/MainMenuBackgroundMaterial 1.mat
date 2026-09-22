@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BackgroundMaterial
+  m_Name: MainMenuBackgroundMaterial 1
   m_Shader: {fileID: -6465566751694194690, guid: 868e888ff1db817458122e283b560a91, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -80,8 +80,8 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 0.14351194, g: 0.567924, b: 0.7075472, a: 1}
-    - _Color2: {r: 0.6886792, g: 0.6328053, b: 0.5489943, a: 1}
+    - _Color1: {r: 0.20967211, g: 0.064613745, b: 0.41509432, a: 1}
+    - _Color2: {r: 0.57812786, g: 0.24390352, b: 0.8207547, a: 1}
     - _Color3: {r: 0.4453504, g: 1, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _Tint: {r: 1, g: 1, b: 1, a: 1}

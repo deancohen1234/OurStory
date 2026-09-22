@@ -56,7 +56,17 @@ public class SaveSlot : Selectable, ISubmitHandler
 
     private float GetCompletionPercentage(GameData data)
     {
-        float totalOrbsCollected = (float)data.OrbObtainedMap.Count / 15f;
+        int orbsCollected = 0;
+
+        foreach (bool orbCollectedBool in data.OrbObtainedMap.Values)
+        {
+            if (orbCollectedBool)
+            {
+                orbsCollected++;
+            }
+        }
+
+        float totalOrbsCollected = (float)orbsCollected / 15f;
         Debug.Log("Orbs Collected: " + data.OrbObtainedMap.Count);
         return totalOrbsCollected;
     } 
